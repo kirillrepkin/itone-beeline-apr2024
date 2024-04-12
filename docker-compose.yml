@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+  bee_pg:
+    container_name: bee_pg
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - bee_pg:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - bee_app
+    restart: unless-stopped
+  bee_pgadm:
+    container_name: bee_pgadm
+    image: dpage/pgadmin4
+    depends_on:
+      - bee_pg
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - bee_pgadm:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    networks:
+      - bee_app
+    restart: unless-stopped
+
+networks:
+  bee_app:
+    driver: bridge
+
+volumes:
+    bee_pg:
+    bee_pgadm:
