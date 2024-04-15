@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "WebApp",
+            "request": "launch",
+            "mainClass": "ru.itone.beeline.database.WebApp",
+            "projectName": "app-apr2024"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "ru.itone.beeline.concurrent.App",
