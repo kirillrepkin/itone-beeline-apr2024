@@ -17,12 +17,13 @@ public class FileProcessor implements Runnable {
     private final BlockingQueue<String> queue;
     private final String fName;
 
-    private Pattern wordPtrn = Pattern.compile(
-        "\\w{15,}+", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
+    private Pattern wordPtrn;
 
-    public FileProcessor(BlockingQueue<String> queue, String fName) {
+    public FileProcessor(BlockingQueue<String> queue, String fName, Integer minLength) {
         this.queue = queue;
         this.fName = fName;
+        this.wordPtrn = Pattern.compile(
+            "\\w{" + minLength + ",}+", Pattern.MULTILINE | Pattern.CASE_INSENSITIVE);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class FileProcessor implements Runnable {
                 matcher = wordPtrn.matcher(fLine);
                 while(matcher.find()) {
                     substr = fLine.substring(matcher.start(), matcher.end());
-                    log.info("Adding item: {}", substr);
+                    log.debug("Adding item: {}", substr);
                     queue.offer(substr);
                 }
             }

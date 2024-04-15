@@ -15,9 +15,13 @@ public class ReadMultipleFiles implements Runnable {
     private static Logger log = LoggerFactory.getLogger(ReadMultipleFiles.class);
     private static BlockingQueue<String> queue = new LinkedBlockingQueue<>();
     private final String baseDir;
+    private final Integer minLength;
+    private final Integer topNum;
 
-    public ReadMultipleFiles(String baseDir) {
+    public ReadMultipleFiles(String baseDir, Integer minLength, Integer topNum) {
         this.baseDir = baseDir;
+        this.minLength = minLength;
+        this.topNum = topNum;
     }
 
     @Override
@@ -27,7 +31,7 @@ public class ReadMultipleFiles implements Runnable {
             .filter(file -> file.isFile() && !file.isHidden())
             .map(f -> {
                 log.info("Thread for {}", f.getName());
-                Thread t = new Thread(new FileProcessor(queue, f.getAbsolutePath()));
+                Thread t = new Thread(new FileProcessor(queue, f.getAbsolutePath(), minLength));
                 t.start();
                 return t;
             }).collect(Collectors.toSet());
@@ -47,7 +51,7 @@ public class ReadMultipleFiles implements Runnable {
         while(procs.stream().collect(Collectors.summarizingInt(t -> t.isAlive() ? 1 : 0)).getSum() > 0 && !counter.isIdle()) {
             continue;
         }
-        counter.print();
+        counter.printSorted(topNum);
         thCounter.interrupt();
 
         log.info("Read complete");

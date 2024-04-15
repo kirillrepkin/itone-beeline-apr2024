@@ -18,7 +18,9 @@ public class App
         if(args.length == 0 || !(new File(args[0]).isDirectory())) {
             log.error("The path {} is not a directory");
         } else {
-            ReadMultipleFiles readMultipleFiles = new ReadMultipleFiles(args[0]);
+            Integer minLength = args.length >= 2 ? Integer.parseInt(args[1]) : 10;
+            Integer topNum = args.length >= 3 ? Integer.parseInt(args[2]): 10;
+            ReadMultipleFiles readMultipleFiles = new ReadMultipleFiles(args[0], minLength, topNum);
             Thread rmfThread = new Thread(readMultipleFiles);
             rmfThread.start();
             try {

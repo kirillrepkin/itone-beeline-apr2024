@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "ru.itone.beeline.concurrent.App",
             "projectName": "app-apr2024",
-            "args": "data/files"
+            "args": "data/files 10 10"
         },
         {
             "type": "java",

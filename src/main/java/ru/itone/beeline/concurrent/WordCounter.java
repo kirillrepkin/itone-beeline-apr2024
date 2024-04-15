@@ -1,6 +1,12 @@
 package ru.itone.beeline.concurrent;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -47,7 +53,24 @@ public class WordCounter implements Runnable {
         return idle;
     }
 
-    public void print() {
-        result.entrySet().forEach(e -> log.info("RESULT: {} -> {}", e.getKey(), e.getValue()));
+    public Map<String, Integer> getSortedResult() {
+        List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(result.entrySet());
+        Collections.sort(list, new Comparator<Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> v1, Map.Entry<String, Integer> v2) {
+                return (v1.getValue()).compareTo(v2.getValue());
+            }
+        });
+        Collections.reverse(list);
+        Map<String, Integer> output = new LinkedHashMap<String, Integer>();
+        for (Map.Entry<String, Integer> entry : list) {
+            output.put(entry.getKey(), entry.getValue());
+        }
+        return output;
+    }
+
+    public void printSorted(Integer topNum) {
+        getSortedResult().entrySet().stream()
+            .limit(topNum)
+            .forEach(e -> log.info("RESULT: \"{}\" used {} times", e.getKey(), e.getValue()));
     }
 }
