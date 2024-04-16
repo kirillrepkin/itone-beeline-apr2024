@@ -22,11 +22,11 @@ public class WebApp {
     private static Logger log = LoggerFactory.getLogger(WebApp.class);
 
     public static void main(String[] args) throws Exception {
-        URI baseUri = UriBuilder.fromUri("http://localhost").port(8880).build();
+        URI baseUri = UriBuilder.fromUri("http://0.0.0.0").port(8880).build();
 		ResourceConfig config = new ResourceConfig(TableResource.class);
 		Server server = JettyHttpContainerFactory.createServer(baseUri, config,false);
 
-		ContextHandler contextHandler = new ContextHandler("/rest");
+		ContextHandler contextHandler = new ContextHandler("/api");
 		contextHandler.setHandler(server.getHandler());
 		
 		ProtectionDomain protectionDomain = WebApp.class.getProtectionDomain();
@@ -35,10 +35,11 @@ public class WebApp {
 		ResourceHandler resourceHandler = new ResourceHandler();
 		resourceHandler.setWelcomeFiles(new String[] {"index.html"});
 		resourceHandler.setResourceBase(location.toExternalForm());
-		System.out.println(location.toExternalForm());
+		
 		HandlerCollection handlerCollection = new HandlerCollection();
 		handlerCollection.setHandlers(new Handler[] {
             resourceHandler, contextHandler, new DefaultHandler()});
+		
 		server.setHandler(handlerCollection);
 		
 		server.start();
