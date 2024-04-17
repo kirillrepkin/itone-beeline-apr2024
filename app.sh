@@ -1,6 +1,12 @@
 #!/bin/bash
 
 case $1 in
+    build)
+        echo executing \"$1\"
+        docker build -t bee_app -f app.Dockerfile .
+        echo done
+    ;;
+
     init)
         echo executing \"$1\"
         for num in $(seq 1 6)
