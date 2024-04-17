@@ -1,0 +1,22 @@
+# Вставить новые сгенерированные записи
+PUT http://localhost:8880/api/table
+Content-Type: application/json
+
+{
+    "from": null,
+    "to": null,
+    "count": 124300
+}
+
+###
+
+# Удалить записи в интервале дат
+DELETE http://localhost:8880/api/table
+
+Content-Type: application/json
+
+{
+    "from": "2023-11-10T00:00:00",
+    "to": "2024-03-10T23:59:59",
+    "count": null
+}
