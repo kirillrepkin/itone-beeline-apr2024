@@ -19,8 +19,7 @@ public class InitDataGenerator {
         String output = args.length >= 2 ? args[1] : "data/sql/init.sql";
 
         final String tableDDL = """
-        drop table if exists `user_web_visit`;
-        create table `user_web_visit` (
+        create table if not exists `public`.`user_web_visit` (
             `login` varchar(255),
             `location` varchar(255),
             `date_time_ts` timestamp default current_timestamp
@@ -28,7 +27,7 @@ public class InitDataGenerator {
         """;
         
         final String insertPrefix = """
-        insert into `user_web_visit` (`login`, `location`, `date_time_ts`) values
+        insert into `public`.`user_web_visit` (`login`, `location`, `date_time_ts`) values
         """;
         
         final String nl = "\r\n";
@@ -47,7 +46,7 @@ public class InitDataGenerator {
                 UserWebVisit row = UserWebVisit.random();
                 line = "\t('"+row.getLogin()+"', '"+row.getLocation()+"', '"+row.getDateTime().minusMinutes(Long.valueOf(count/60).intValue())+"')";
                 bw.write(line);
-                bw.write(i==count-1 ? ";" : nl);
+                bw.write(i==count-1 ? ";" : ","+nl);
             }
         } catch(Exception ex) {
             log.error(ex.getMessage(), ex);
