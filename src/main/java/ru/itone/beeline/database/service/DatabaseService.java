@@ -24,7 +24,11 @@ public class DatabaseService {
     
     private static final String DELETE_QUERY = """
         delete from public."user_web_visit" 
-        where "date_time_ts" >= ? and "date_time_ts" < ? limit ?
+        where ctid in (
+            select ctid from public."user_web_visit" 
+            where "date_time_ts" >= ? and "date_time_ts" < ? 
+            limit ?
+        )
     """;
 
     public PreparedStatement getBatchInsertStatement() {

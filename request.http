@@ -5,18 +5,17 @@ Content-Type: application/json
 {
     "from": null,
     "to": null,
-    "count": 124300
+    "count": 1243000
 }
 
 ###
 
 # Удалить записи в интервале дат
 DELETE http://localhost:8880/api/table
-
 Content-Type: application/json
 
 {
     "from": "2023-11-10T00:00:00",
-    "to": "2024-03-10T23:59:59",
+    "to": "2024-04-10T23:59:59",
     "count": null
 }
