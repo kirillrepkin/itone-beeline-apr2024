@@ -22,6 +22,9 @@ import ru.itone.beeline.database.service.TableService;
 public class TableResource {
 
     private static Logger log = LoggerFactory.getLogger(TableResource.class);
+
+    private static final int DELETE_BATCH_SIZE = 1000;
+    
     private static DatabaseService databaseService = new DatabaseService();
     private static TableService service = new TableService(databaseService);
 
@@ -32,7 +35,8 @@ public class TableResource {
         log.info("DELETE request processing: {}", param);
         AppResponse result;
         try {
-            Integer deletedRows = service.deleteRows(null, null, 1000);
+            Integer deletedRows = service.deleteRows(
+                param.fromAsDateTime(), param.toAsDateTime(), DELETE_BATCH_SIZE);
             result = AppResponse.builder()
                 .affectedRows(deletedRows)
                 .build();

@@ -1,5 +1,7 @@
 package ru.itone.beeline.database.entity;
 
+import org.joda.time.DateTime;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
@@ -15,5 +17,13 @@ public class ReqParam {
     
     @JsonProperty("count")
     private Integer count;
+
+    public DateTime fromAsDateTime() {
+        return DateTime.parse(from);
+    }
+
+    public DateTime toAsDateTime() {
+        return DateTime.parse(to);
+    }
 
 }

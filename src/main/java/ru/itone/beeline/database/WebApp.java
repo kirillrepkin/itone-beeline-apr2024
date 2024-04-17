@@ -24,6 +24,7 @@ public class WebApp {
 	
     public static void main(String[] args) throws Exception {
         URI baseUri = UriBuilder.fromUri(HOSTNAME).port(PORT).build();
+		log.info("Server addr: {}", baseUri + BASE_PATH);
 		ResourceConfig config = new ResourceConfig(TableResource.class);
 		Server server = JettyHttpContainerFactory.createServer(baseUri, config,false);
 
