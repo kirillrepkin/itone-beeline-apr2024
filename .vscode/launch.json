@@ -16,7 +16,12 @@
             "name": "WebApp",
             "request": "launch",
             "mainClass": "ru.itone.beeline.database.WebApp",
-            "projectName": "app-apr2024"
+            "projectName": "app-apr2024",
+            "env": {
+                "DB_JDBC_URL": "jdbc:postgresql://localhost:5432/postgres",
+                "DB_USERNAME": "postgres",
+                "DB_PASSWORD": "postgres"
+            }
         },
         {
             "type": "java",
