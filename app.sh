@@ -3,7 +3,19 @@
 case $1 in
     init)
         echo executing \"$1\"
-        for fname in one two three four five; do cp data/files/big.txt data/files/big_${fname}.txt; done
+        for num in $(seq 1 6)
+        do
+            fname=data/files/big_${num}.txt
+            echo generating $fname
+            cp data/files/big.txt ${fname}
+        done
+        mvn clean compile assembly:single > /dev/null
+        for num in $(seq 1 10)
+        do
+            fname=data/sql/init_${num}.sql
+            echo generating $fname
+            java -cp target/app-jar-with-dependencies.jar ru.itone.beeline.database.InitDataGenerator 1000000 ${fname}
+        done
         echo done
     ;;
 

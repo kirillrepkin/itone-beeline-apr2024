@@ -1,4 +1,4 @@
-package ru.itone.beeline.database;
+package ru.itone.beeline.database.service;
 
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
