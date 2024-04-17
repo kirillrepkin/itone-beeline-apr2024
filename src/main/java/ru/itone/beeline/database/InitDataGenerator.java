@@ -16,15 +16,15 @@ public class InitDataGenerator {
     private static final int DEFAULT_ROWS_COUNT = 100;
 
     private static final String SQL_TABLE_DDL = """
-    create table if not exists `public`.`user_web_visit` (
-        `login` varchar(255),
-        `location` varchar(255),
-        `date_time_ts` timestamp default current_timestamp
+    create table if not exists public."user_web_visit" (
+        "login" varchar(255),
+        "location" varchar(255),
+        "date_time_ts" timestamp default current_timestamp
     );
     """;
     
     private static final String SQL_INSERT_PREFIX = """
-    insert into `public`.`user_web_visit` (`login`, `location`, `date_time_ts`) values
+    insert into public."user_web_visit" ("login", "location", "date_time_ts") values
     """;
     
     private static final String NEW_LINE = "\r\n";
