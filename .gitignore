@@ -5,3 +5,4 @@ target
 data/files/*_*.txt
 data/sql/*_*.sql
 !.vscode/launch.json
+*.cast
