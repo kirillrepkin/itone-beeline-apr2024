@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory;
 
 public class FileProcessor implements Runnable {
 
-    private static Logger log = LoggerFactory.getLogger(FileProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(FileProcessor.class);
 
     private final BlockingQueue<String> queue;
     private final String fName;
 
-    private Pattern wordPtrn;
+    private final Pattern wordPtrn;
 
     public FileProcessor(BlockingQueue<String> queue, String fName, Integer minLength) {
         this.queue = queue;

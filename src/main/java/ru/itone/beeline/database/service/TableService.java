@@ -11,16 +11,16 @@ import ru.itone.beeline.database.entity.UserWebVisit;
 
 public class TableService {
 
-    private static Logger log = LoggerFactory.getLogger(TableService.class);
-    private DatabaseService dbService;
+    private static final Logger log = LoggerFactory.getLogger(TableService.class);
+    private final DatabaseService dbService;
 
     public TableService(DatabaseService databaseService) {
         this.dbService = databaseService;
     }
 
-    public Integer insertRandomRows(Integer count) throws SQLException {
+    public int insertRandomRows(Integer count) throws SQLException {
         PreparedStatement stmt = dbService.getBatchInsertStatement();
-        Integer affectedRows = 0;
+        int affectedRows = 0;
         try {
             for(int i=0; i<count; i++) {
                 UserWebVisit row = UserWebVisit.random();
@@ -46,9 +46,9 @@ public class TableService {
         return affectedRows;
     }
 
-    public Integer deleteRows(DateTime fromDateTime, DateTime toDateTime, Integer count) throws SQLException {
+    public int deleteRows(DateTime fromDateTime, DateTime toDateTime, Integer count) throws SQLException {
         PreparedStatement stmt = dbService.getDeleteStatement();
-        Integer affectedRows = 0;
+        int affectedRows = 0;
         try {
             boolean proceed = true;
             while(proceed) {

@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class WordCounter implements Runnable {
 
-    private static Logger log = LoggerFactory.getLogger(WordCounter.class);
+    private static final Logger log = LoggerFactory.getLogger(WordCounter.class);
 
     private final BlockingQueue<String> queue;
 
@@ -35,18 +35,14 @@ public class WordCounter implements Runnable {
             if ((line = queue.poll()) != null) {
                 idle = false;
                 if(result.get(line) != null) {
-                    result.put(line, result.get(line)+1);
+                    result.put(line, Integer.valueOf(result.get(line) + 1));
                 } else {
-                    result.put(line, 1);
+                    result.put(line, Integer.valueOf(1));
                 }
             } else {
                 idle = true;
             }
         }
-    }
-
-    public Map<String, Integer> getResult() {
-        return result;
     }
 
     public boolean isIdle() {
@@ -55,8 +51,8 @@ public class WordCounter implements Runnable {
 
     public Map<String, Integer> getSortedResult() {
         List<Map.Entry<String, Integer> > list = new LinkedList<Map.Entry<String, Integer> >(result.entrySet());
-        Collections.sort(list, new Comparator<Entry<String, Integer>>() {
-            public int compare(Map.Entry<String, Integer> v1, Map.Entry<String, Integer> v2) {
+        list.sort(new Comparator<Entry<String, Integer>>() {
+            public int compare(Entry<String, Integer> v1, Entry<String, Integer> v2) {
                 return (v1.getValue()).compareTo(v2.getValue());
             }
         });

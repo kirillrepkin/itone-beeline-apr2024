@@ -1,5 +1,6 @@
 .vscode/*
-target/
+.idea
+target
 .DS_Store
 data/files/*_*.txt
 data/sql/*_*.sql

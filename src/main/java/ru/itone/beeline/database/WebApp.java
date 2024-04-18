@@ -20,7 +20,7 @@ public class WebApp {
 	private static final int PORT = 8880;
 	private static final String HOSTNAME = "http://0.0.0.0";
 
-	private static Logger log = LoggerFactory.getLogger(WebApp.class);
+	private static final Logger log = LoggerFactory.getLogger(WebApp.class);
 	
     public static void main(String[] args) throws Exception {
         URI baseUri = UriBuilder.fromUri(HOSTNAME).port(PORT).build();

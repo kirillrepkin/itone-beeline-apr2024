@@ -1,6 +1,7 @@
 package ru.itone.beeline.concurrent;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -12,8 +13,8 @@ import org.slf4j.LoggerFactory;
 
 public class ReadMultipleFiles implements Runnable {
 
-    private static Logger log = LoggerFactory.getLogger(ReadMultipleFiles.class);
-    private static BlockingQueue<String> queue = new LinkedBlockingQueue<>();
+    private static final Logger log = LoggerFactory.getLogger(ReadMultipleFiles.class);
+    private static final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
     private final String baseDir;
     private final Integer minLength;
     private final Integer topNum;
@@ -27,7 +28,7 @@ public class ReadMultipleFiles implements Runnable {
     @Override
     public void run() {
 
-        Set<Thread> procs = Stream.of(new File(baseDir).listFiles())
+        Set<Thread> procs = Stream.of(Objects.requireNonNull(new File(baseDir).listFiles()))
             .filter(file -> file.isFile() && !file.isHidden())
             .map(f -> {
                 log.info("Thread for {}", f.getName());
@@ -36,7 +37,7 @@ public class ReadMultipleFiles implements Runnable {
                 return t;
             }).collect(Collectors.toSet());
 
-        procs.stream().forEach(t -> {
+        procs.forEach(t -> {
             try {
                 t.join();
             } catch (InterruptedException e) {

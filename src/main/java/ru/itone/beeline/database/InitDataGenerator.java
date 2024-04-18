@@ -34,7 +34,7 @@ public class InitDataGenerator {
     public static void main(String[] args) {
         long count = args.length >= 1 ? Long.parseLong(args[0]) : DEFAULT_ROWS_COUNT;
         String output = args.length >= 2 ? args[1] : DEFAULT_FILE_PATH;
-        log.info("Generating {} with {} rows", output, count);
+        log.info("Generating {} with {} rows", output, String.valueOf(count));
         generateSqlFile(count, output);
     }
 

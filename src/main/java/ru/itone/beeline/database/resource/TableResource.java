@@ -21,12 +21,12 @@ import ru.itone.beeline.database.service.TableService;
 @Path("/table")
 public class TableResource {
 
-    private static Logger log = LoggerFactory.getLogger(TableResource.class);
+    private static final Logger log = LoggerFactory.getLogger(TableResource.class);
 
     private static final int DELETE_BATCH_SIZE = 1000;
     
-    private static DatabaseService databaseService = new DatabaseService();
-    private static TableService service = new TableService(databaseService);
+    private static final DatabaseService databaseService = new DatabaseService();
+    private static final TableService service = new TableService(databaseService);
 
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
@@ -35,10 +35,10 @@ public class TableResource {
         log.info("DELETE request processing: {}", param);
         AppResponse result;
         try {
-            Integer deletedRows = service.deleteRows(
-                param.fromAsDateTime(), param.toAsDateTime(), DELETE_BATCH_SIZE);
+            int deletedRows = service.deleteRows(
+                param.fromAsDateTime(), param.toAsDateTime(), Integer.valueOf(DELETE_BATCH_SIZE));
             result = AppResponse.builder()
-                .affectedRows(deletedRows)
+                .affectedRows(Integer.valueOf(deletedRows))
                 .build();
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
@@ -58,9 +58,9 @@ public class TableResource {
         log.info("PUT request processing: {}", param);
         AppResponse result;
         try {
-            Integer insertedRows = service.insertRandomRows(param.getCount());
+            int insertedRows = service.insertRandomRows(param.getCount());
             result = AppResponse.builder()
-                .affectedRows(insertedRows)
+                .affectedRows(Integer.valueOf(insertedRows))
                 .build();
         } catch (SQLException e) {
             log.error(e.getMessage(), e);

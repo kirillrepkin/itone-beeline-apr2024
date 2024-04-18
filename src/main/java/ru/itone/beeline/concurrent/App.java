@@ -10,16 +10,16 @@ import org.slf4j.LoggerFactory;
 public class App 
 {
     
-    private static Logger log = LoggerFactory.getLogger(App.class);
+    private static final Logger log = LoggerFactory.getLogger(App.class);
     public static void main(String[] args)
     {
         log.info("Application starting...");
 
         if(args.length == 0 || !(new File(args[0]).isDirectory())) {
-            log.error("The path {} is not a directory");
+            log.error("The path is not a directory");
         } else {
-            Integer minLength = args.length >= 2 ? Integer.parseInt(args[1]) : 10;
-            Integer topNum = args.length >= 3 ? Integer.parseInt(args[2]): 10;
+            Integer minLength = (Integer) (args.length >= 2 ? Integer.parseInt(args[1]) : 10);
+            Integer topNum = (Integer) (args.length >= 3 ? Integer.parseInt(args[2]): 10);
             ReadMultipleFiles readMultipleFiles = new ReadMultipleFiles(args[0], minLength, topNum);
             Thread rmfThread = new Thread(readMultipleFiles);
             rmfThread.start();

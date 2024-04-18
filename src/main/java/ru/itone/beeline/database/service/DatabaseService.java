@@ -13,7 +13,7 @@ public class DatabaseService {
     private static final String DB_USERNAME = "DB_USERNAME";
     private static final String DB_JDBC_URL = "DB_JDBC_URL";
 
-    private static Logger log = LoggerFactory.getLogger(DatabaseService.class);
+    private static final Logger log = LoggerFactory.getLogger(DatabaseService.class);
     
     private Connection conn;
 
@@ -41,8 +41,7 @@ public class DatabaseService {
 
     protected PreparedStatement createStatement(String query) {
         try {
-            PreparedStatement stmt = getConnection().prepareStatement(query);
-            return stmt;
+            return getConnection().prepareStatement(query);
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
             return null;
