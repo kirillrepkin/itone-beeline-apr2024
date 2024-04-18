@@ -35,7 +35,7 @@ public class FileProcessor implements Runnable {
             while ((fLine = reader.readLine()) != null) {
                 matcher = wordPtrn.matcher(fLine);
                 while(matcher.find()) {
-                    substr = fLine.substring(matcher.start(), matcher.end());
+                    substr = fLine.substring(matcher.start(), matcher.end()).toLowerCase();
                     log.debug("Adding item: {}", substr);
                     queue.offer(substr);
                 }
