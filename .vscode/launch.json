@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "InitDataGenerator",
+            "request": "launch",
+            "mainClass": "ru.itone.beeline.database.InitDataGenerator",
+            "projectName": "app-apr2024"
+        },
+        {
+            "type": "java",
+            "name": "WebApp",
+            "request": "launch",
+            "mainClass": "ru.itone.beeline.database.WebApp",
+            "projectName": "app-apr2024",
+            "env": {
+                "DB_JDBC_URL": "jdbc:postgresql://localhost:5432/postgres",
+                "DB_USERNAME": "postgres",
+                "DB_PASSWORD": "postgres"
+            }
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "ru.itone.beeline.concurrent.App",
+            "projectName": "app-apr2024",
+            "args": "data/files 10 10"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

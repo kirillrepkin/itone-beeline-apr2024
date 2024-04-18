@@ -1,4 +1,8 @@
-.vscode
-target/
+.vscode/*
+.idea
+target
 .DS_Store
-data/files/*.sample
+data/files/*_*.txt
+data/sql/*_*.sql
+!.vscode/launch.json
+*.cast

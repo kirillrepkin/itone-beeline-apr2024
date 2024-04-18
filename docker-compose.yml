@@ -9,6 +9,7 @@ services:
       PGDATA: /data/postgres
     volumes:
       - bee_pg:/data/postgres
+      - ./data/sql:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     networks:
@@ -30,6 +31,20 @@ services:
     networks:
       - bee_app
     restart: unless-stopped
+  bee_task1:
+    container_name: bee_task1
+    image: bee_app
+    volumes:
+      - ./data/files:/data
+    command: ["java","-cp","/app/bee_app.jar", "ru.itone.beeline.concurrent.App", "/data", "10", "10"]
+  bee_task2:
+    container_name: bee_task2
+    image: bee_app
+    depends_on:
+      - bee_pg
+    ports:
+      - 8880:8880
+    command: ["java","-cp","/app/bee_app.jar", "ru.itone.beeline.database.WebApp"]
 
 networks:
   bee_app:
