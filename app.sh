@@ -33,7 +33,7 @@ case $1 in
     ;;
 
     logs)
-        docker logs app_$2
+        docker logs bee_$2
     ;;
 
     build)
